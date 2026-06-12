@@ -493,7 +493,7 @@ function getData() {
       showCount: true,
       showFilters: true
     },
-    passwords: { admin: 'admin123', Athira: 'athira@thattekkad.in' }
+    passwords: { admin: 'admin123', artist: 'athira@thattekkad.in' }
   };
 }
 function saveData(d) { STORAGE.set('luminary_data', d); }
@@ -533,7 +533,7 @@ function doLogin() {
   const d = getData();
   let role = null;
   if (u === 'admin' && p === d.passwords.admin) role = 'admin';
-  else if (u === 'artist' && p === d.passwords.artist) role = 'artist';
+  else if (u === 'Athira' && p === d.passwords.artist) role = 'artist';
   if (!role) { document.getElementById('login-error').style.display = 'block'; return; }
   currentUser = role;
   document.getElementById('nav-auth').innerHTML = `
