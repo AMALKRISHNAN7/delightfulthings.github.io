@@ -575,7 +575,7 @@ select.form-control{appearance:none;cursor:pointer;}
 
 <script>
 // ── STATE ──────────────────────────────────────────────────
-let currentUser = null;
+let currentUser = sessionStorage.getItem('luminary_user') || null;
 let allArtworks  = [];
 let siteSettings = {};
 let passwords    = {};
@@ -605,6 +605,15 @@ window.addEventListener('firebase-ready', async () => {
   document.getElementById('loading-screen').classList.add('hidden');
   applySettings();
   renderGallery();
+// Restore login if page was refreshed
+  if (currentUser) {
+   setupAdminUI(currentUser);
+   const badge = currentUser === 'admin' ? '👑 Admin' : '🎨 Artist';
+   document.getElementById('nav-auth').innerHTML = `
+    <div class="user-badge"><div class="user-dot"></div>${badge}</div>
+    <button class="btn btn-ghost btn-sm" onclick="doLogout()">Sign out</button>`;
+   document.getElementById('mobile-signin').style.display = 'none';
+}
 });
 
 // ── NAVIGATION ─────────────────────────────────────────────
@@ -650,6 +659,7 @@ async function doLogin() {
   btn.textContent = 'Sign In'; btn.disabled = false;
   if (!role) { document.getElementById('login-error').style.display = 'block'; return; }
   currentUser = role;
+  sessionStorage.setItem('luminary_user', role);
   document.getElementById('nav-auth').innerHTML = `
     <div class="user-badge"><div class="user-dot"></div>${role==='admin'?'👑 Admin':'🎨 Artist'}</div>
     <button class="btn btn-ghost btn-sm" onclick="doLogout()">Sign out</button>`;
@@ -660,6 +670,7 @@ async function doLogin() {
 }
 function doLogout() {
   currentUser = null;
+  sessionStorage.removeItem('luminary_user');
   document.getElementById('nav-auth').innerHTML = `<button class="btn btn-ghost btn-sm" onclick="showLogin()">Sign in</button>`;
   document.getElementById('mobile-signin').style.display = '';
   showPage('gallery');
