@@ -816,17 +816,19 @@ function applyStoredTheme() {
 applyStoredTheme();
 
 // ── STATE ──────────────────────────────────────────────────
-let currentUser = null;
+let currentUser = sessionStorage.getItem('lum_user') || null;
 let allArtworks  = [];
 let siteSettings = {};
 let passwords    = {};
 let activeFilter = 'All';
 let lbArts = [], currentLbIdx = 0;
-let pendingImageBase64 = null;   // new image waiting to be saved
-let currentImageBase64 = null;   // existing image when editing
+let pendingImageBase64 = null;
+let currentImageBase64 = null;
 
 // ── FIREBASE READY ─────────────────────────────────────────
 window.addEventListener('firebase-ready', async () => {
+  // Set a hard timeout — loading screen ALWAYS hides within 5s no matter what
+  const hideTimer = setTimeout(() => hideLoading(), 5000);
   try {
     const [s, p, arts] = await Promise.all([
       window.FB.fbGet('config','settings'),
@@ -841,12 +843,37 @@ window.addEventListener('firebase-ready', async () => {
     siteSettings = window.FB.DEF_SETTINGS;
     passwords    = window.FB.DEF_PASSWORDS;
     allArtworks  = [];
-    showToast('Could not connect to database. Check Firebase config.', 'error');
   }
-  document.getElementById('loading-screen').classList.add('hidden');
+  clearTimeout(hideTimer);
+  hideLoading();
   applySettings();
   renderGallery();
+  // Restore login session after page refresh
+  restoreSession();
 });
+
+// Also hide loading if Firebase module itself fails to load
+window.addEventListener('error', () => hideLoading(), {once:true});
+setTimeout(() => hideLoading(), 6000); // absolute fallback
+
+function hideLoading() {
+  const el = document.getElementById('loading-screen');
+  if (el) el.classList.add('hidden');
+}
+
+function restoreSession() {
+  const role = sessionStorage.getItem('lum_user');
+  if (!role) return;
+  currentUser = role;
+  // Restore nav badge
+  document.getElementById('nav-auth').innerHTML = `
+    <div class="user-badge"><div class="user-dot"></div>${role==='admin'?'👑 Admin':'🎨 Artist'}</div>
+    <button class="btn btn-ghost btn-sm" onclick="doLogout()">Sign out</button>`;
+  document.getElementById('mobile-signin').style.display = 'none';
+  // Restore admin page
+  setupAdminUI(role);
+  showAdminPage();
+}
 
 // ── NAVIGATION ─────────────────────────────────────────────
 function showPage(p) {
@@ -891,6 +918,7 @@ async function doLogin() {
   btn.textContent = 'Sign In'; btn.disabled = false;
   if (!role) { document.getElementById('login-error').style.display = 'block'; return; }
   currentUser = role;
+  sessionStorage.setItem('lum_user', role);
   document.getElementById('nav-auth').innerHTML = `
     <div class="user-badge"><div class="user-dot"></div>${role==='admin'?'👑 Admin':'🎨 Artist'}</div>
     <button class="btn btn-ghost btn-sm" onclick="doLogout()">Sign out</button>`;
@@ -901,6 +929,7 @@ async function doLogin() {
 }
 function doLogout() {
   currentUser = null;
+  sessionStorage.removeItem('lum_user');
   document.getElementById('nav-auth').innerHTML = `<button class="btn btn-ghost btn-sm" onclick="showLogin()">Sign in</button>`;
   document.getElementById('mobile-signin').style.display = '';
   showPage('gallery');
