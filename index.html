@@ -29,7 +29,6 @@ const firebaseConfig = {
   appId: "1:475092698764:web:dac000bd4f0a374e391da9",
   measurementId: "G-4KKH3TLF4Z"
 };
-
 // ▲▲▲ PASTE YOUR FIREBASE CONFIG HERE ▲▲▲
 
 const app = initializeApp(firebaseConfig);
@@ -253,6 +252,33 @@ select.form-control{appearance:none;cursor:pointer;}
 .divider{height:1px;background:var(--border);margin:1rem 0;}
 .footer{border-top:1px solid var(--border);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;color:var(--text3);font-size:0.78rem;flex-wrap:wrap;gap:0.5rem;}
 
+/* INSTAGRAM */
+.ig-icon-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:transparent;border:1px solid var(--border);cursor:pointer;transition:all 0.2s;flex-shrink:0;text-decoration:none;}
+.ig-icon-btn:hover{border-color:var(--accent);background:rgba(201,169,154,0.08);}
+.ig-icon-btn svg{width:16px;height:16px;}
+.ig-section{padding:3rem 2rem;max-width:1400px;margin:0 auto;}
+.ig-card{background:linear-gradient(135deg,#1a1210 0%,#1e1c19 100%);border:1px solid var(--border);border-radius:16px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;position:relative;overflow:hidden;}
+.ig-card::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(201,169,154,0.08) 0%,transparent 70%);pointer-events:none;}
+.ig-card-left{display:flex;align-items:center;gap:1.25rem;}
+.ig-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;padding:2px;}
+.ig-avatar-inner{width:58px;height:58px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:1.5rem;}
+.ig-handle{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:0.2rem;}
+.ig-sub{font-size:0.8rem;color:var(--text3);}
+.ig-follow-btn{display:flex;align-items:center;gap:0.6rem;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;border:none;padding:10px 22px;border-radius:30px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;text-decoration:none;transition:opacity 0.2s;white-space:nowrap;}
+.ig-follow-btn:hover{opacity:0.88;}
+.ig-about-section{display:flex;flex-direction:column;align-items:center;gap:1rem;margin-top:2.5rem;}
+.ig-about-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem 2rem;display:flex;align-items:center;gap:1.5rem;max-width:420px;width:100%;}
+.ig-about-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:2px;}
+.ig-about-avatar-inner{width:46px;height:46px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
+.ig-about-text{flex:1;}
+.ig-about-handle{font-weight:600;font-size:0.9rem;margin-bottom:0.2rem;}
+.ig-about-label{font-size:0.75rem;color:var(--text3);}
+.ig-about-follow{display:flex;align-items:center;gap:0.4rem;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;border:none;padding:7px 16px;border-radius:20px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;text-decoration:none;white-space:nowrap;transition:opacity 0.2s;}
+.ig-about-follow:hover{opacity:0.88;}
+.footer-ig{display:flex;align-items:center;gap:0.5rem;color:var(--text3);font-size:0.78rem;text-decoration:none;transition:color 0.2s;}
+.footer-ig:hover{color:var(--accent);}
+.footer-ig svg{width:14px;height:14px;}
+
 /* LOADING */
 .loading-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:1rem;}
 .loading-screen.hidden{display:none;}
@@ -319,6 +345,9 @@ select.form-control{appearance:none;cursor:pointer;}
     <button class="nav-tab" onclick="showPage('contact')">Contact</button>
   </div>
   <div class="nav-right">
+    <a href="https://www.instagram.com/delightful_._things" target="_blank" class="ig-icon-btn" title="Follow on Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text2)"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    </a>
     <div id="nav-auth">
       <button class="btn btn-ghost btn-sm" onclick="showLogin()">Sign in</button>
     </div>
@@ -333,7 +362,10 @@ select.form-control{appearance:none;cursor:pointer;}
   <button class="mobile-tab active" onclick="showPage('gallery');closeMobileMenu()">🖼 Gallery</button>
   <button class="mobile-tab" onclick="showPage('about');closeMobileMenu()">👤 About</button>
   <button class="mobile-tab" onclick="showPage('contact');closeMobileMenu()">✉️ Contact</button>
-  <div style="border-top:1px solid var(--border);margin-top:0.25rem;padding-top:0.25rem">
+  <a class="mobile-tab" href="https://www.instagram.com/delightful_._things" target="_blank" style="display:flex;align-items:center;gap:0.5rem">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    Instagram
+  </a>
     <button class="mobile-tab" onclick="showLogin();closeMobileMenu()" id="mobile-signin">🔑 Sign in</button>
   </div>
 </div>
@@ -361,7 +393,30 @@ select.form-control{appearance:none;cursor:pointer;}
       <p>The artist will be adding work here soon. Check back!</p>
     </div>
   </section>
-  <footer class="footer"><span id="footer-name">Luminary Gallery</span><span>© 2025. All artworks reserved.</span></footer>
+  <!-- INSTAGRAM SECTION -->
+  <section class="ig-section">
+    <div class="ig-card">
+      <div class="ig-card-left">
+        <div class="ig-avatar"><div class="ig-avatar-inner">🎨</div></div>
+        <div>
+          <div class="ig-handle">@delightful_._things</div>
+          <div class="ig-sub">Follow for behind-the-scenes &amp; new work</div>
+        </div>
+      </div>
+      <a href="https://www.instagram.com/delightful_._things" target="_blank" class="ig-follow-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none"/></svg>
+        Follow on Instagram
+      </a>
+    </div>
+  </section>
+  <footer class="footer">
+    <span id="footer-name">Luminary Gallery</span>
+    <a href="https://www.instagram.com/delightful_._things" target="_blank" class="footer-ig">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      @delightful_._things
+    </a>
+    <span>© 2025. All artworks reserved.</span>
+  </footer>
 </div>
 
 <!-- ABOUT PAGE -->
@@ -377,9 +432,29 @@ select.form-control{appearance:none;cursor:pointer;}
         <div class="stat-card"><div class="stat-num" id="stat-years">5+</div><div class="stat-label">Years Active</div></div>
         <div class="stat-card"><div class="stat-num" id="stat-exhibitions">12</div><div class="stat-label">Exhibitions</div></div>
       </div>
+      <div class="ig-about-section">
+        <div class="ig-about-card">
+          <div class="ig-about-avatar"><div class="ig-about-avatar-inner">🎨</div></div>
+          <div class="ig-about-text">
+            <div class="ig-about-handle">@delightful_._things</div>
+            <div class="ig-about-label">Follow for new work &amp; process</div>
+          </div>
+          <a href="https://www.instagram.com/delightful_._things" target="_blank" class="ig-about-follow">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none"/></svg>
+            Follow
+          </a>
+        </div>
+      </div>
     </div>
   </div>
-  <footer class="footer"><span id="footer-name2">Luminary Gallery</span><span>© 2025. All artworks reserved.</span></footer>
+  <footer class="footer">
+    <span id="footer-name2">Luminary Gallery</span>
+    <a href="https://www.instagram.com/delightful_._things" target="_blank" class="footer-ig">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      @delightful_._things
+    </a>
+    <span>© 2025. All artworks reserved.</span>
+  </footer>
 </div>
 
 <!-- CONTACT PAGE -->
@@ -575,7 +650,7 @@ select.form-control{appearance:none;cursor:pointer;}
 
 <script>
 // ── STATE ──────────────────────────────────────────────────
-let currentUser = sessionStorage.getItem('luminary_user') || null;
+let currentUser = null;
 let allArtworks  = [];
 let siteSettings = {};
 let passwords    = {};
@@ -605,15 +680,6 @@ window.addEventListener('firebase-ready', async () => {
   document.getElementById('loading-screen').classList.add('hidden');
   applySettings();
   renderGallery();
-// Restore login if page was refreshed
-  if (currentUser) {
-   setupAdminUI(currentUser);
-   const badge = currentUser === 'admin' ? '👑 Admin' : '🎨 Artist';
-   document.getElementById('nav-auth').innerHTML = `
-    <div class="user-badge"><div class="user-dot"></div>${badge}</div>
-    <button class="btn btn-ghost btn-sm" onclick="doLogout()">Sign out</button>`;
-   document.getElementById('mobile-signin').style.display = 'none';
-}
 });
 
 // ── NAVIGATION ─────────────────────────────────────────────
@@ -659,7 +725,6 @@ async function doLogin() {
   btn.textContent = 'Sign In'; btn.disabled = false;
   if (!role) { document.getElementById('login-error').style.display = 'block'; return; }
   currentUser = role;
-  sessionStorage.setItem('luminary_user', role);
   document.getElementById('nav-auth').innerHTML = `
     <div class="user-badge"><div class="user-dot"></div>${role==='admin'?'👑 Admin':'🎨 Artist'}</div>
     <button class="btn btn-ghost btn-sm" onclick="doLogout()">Sign out</button>`;
@@ -670,7 +735,6 @@ async function doLogin() {
 }
 function doLogout() {
   currentUser = null;
-  sessionStorage.removeItem('luminary_user');
   document.getElementById('nav-auth').innerHTML = `<button class="btn btn-ghost btn-sm" onclick="showLogin()">Sign in</button>`;
   document.getElementById('mobile-signin').style.display = '';
   showPage('gallery');
