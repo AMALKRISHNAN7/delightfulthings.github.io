@@ -652,7 +652,7 @@ position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;a
       </div>
       <div class="admin-sidebar-title">Content</div>
       <div class="sidebar-link active" onclick="adminNav('artworks',this)">🖼 Artworks</div>
-      <div class="sidebar-link" onclick="adminNav('upload',this)">➕ Add Artwork</div>
+      <div class="sidebar-link" onclick="adminNav('upload',this)" id="add-artwork-nav">➕ Add Artwork</div>
       <div class="admin-sidebar-title" style="margin-top:1rem" id="settings-nav-group">Site</div>
       <div class="sidebar-link" onclick="adminNav('settings',this)" id="settings-nav">⚙️ Settings</div>
       <div class="sidebar-link" onclick="adminNav('passwords',this)" id="passwords-nav">🔑 Passwords</div>
@@ -720,7 +720,7 @@ position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;a
           </div>
           <div style="display:flex;gap:0.6rem;margin-top:0.5rem;flex-wrap:wrap">
             <button class="btn btn-accent" onclick="saveArtwork()" id="save-art-btn">Save Artwork</button>
-            <button class="btn btn-ghost" onclick="clearUploadForm();adminNav('artworks',document.querySelector('.sidebar-link'))">Cancel</button>
+            <button class="btn btn-ghost" onclick="clearUploadForm();adminNav('artworks',document.querySelector('.sidebar-link'))">← Back to Artworks</button>
           </div>
         </div>
       </div>
@@ -949,6 +949,10 @@ function showAdminPage() {
   adminNav('artworks', document.querySelector('.sidebar-link'));
 }
 
+function goToDashboard() {
+  showAdminPage();
+}
+
 // ── ADMIN NAV ──────────────────────────────────────────────
 function adminNav(panel, el) {
   document.querySelectorAll('.sidebar-link').forEach(x => x.classList.remove('active'));
@@ -1115,7 +1119,7 @@ function renderAdminTable() {
       <td style="color:var(--text2)">${a.year||'—'}</td>
       <td><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status||'draft'}</span></td>
       <td><div class="td-actions">
-        <button class="btn btn-ghost btn-sm" onclick="editArtwork('${a.id}')">Edit</button>
+        <button class="btn btn-ghost btn-sm" onclick="editArtwork('${a.id}')">✏️ Edit</button>
         ${isAdmin?`<button class="btn btn-ghost btn-sm" onclick="toggleStatus('${a.id}')">${a.status==='published'?'Unpublish':'Publish'}</button>
         <button class="btn btn-danger btn-sm" onclick="deleteArtwork('${a.id}')">Delete</button>`:''}
       </div></td>`;
